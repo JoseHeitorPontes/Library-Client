@@ -1,0 +1,19 @@
+:root {
+    --green: rgb(32, 143, 32);
+}
+
+.text-green {
+    color: var(--green) !important;
+}
+
+.bg-green {
+    background-color: var(--green) !important;
+}
+
+.btn-green {
+    border: 0 !important;
+
+    &:hover {
+        filter: brightness(85%);
+    }
+}
