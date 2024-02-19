@@ -4,9 +4,9 @@ import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
+import { api } from "../../services/api";
 import { initialValuesLogin } from "../../utils/initialValues/login";
 import { loginSchema } from "../../utils/validations/loginSchema";
-import { api } from "../../services/api";
 
 export function Login()
 {
@@ -35,16 +35,28 @@ export function Login()
                             <Form.Label className="fw-bold">Email:</Form.Label>
 
                             <Form.Control type="email" {...formik.getFieldProps("email")} />
+
+                            {formik.touched.email && formik.errors.email && (
+                                <span className="text-danger">{formik.errors.email}</span>
+                            )}
                         </Form.Group>
 
                         <Form.Group className="mb-4">
                             <Form.Label className="fw-bold">Senha:</Form.Label>
 
                             <Form.Control type="password" {...formik.getFieldProps("password")} />
+
+                            {formik.touched.password && formik.errors.password && (
+                                <span className="text-danger">{formik.errors.password}</span>
+                            )}
                         </Form.Group>
 
                         <div className="d-flex justify-content-center">
-                            <Button variant="dark" type="submit">
+                            <Button
+                                variant="dark"
+                                type="submit"
+                                disabled={!formik.isValid}
+                            >
                                 Entrar
                             </Button>
                         </div>
