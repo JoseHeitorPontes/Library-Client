@@ -1,5 +1,9 @@
 :root {
-    --green: rgb(32, 143, 32);
+    --green: rgb(31, 172, 31);
+}
+
+.h-vh-full {
+    height: 100vh;
 }
 
 .text-green {
@@ -12,6 +16,7 @@
 
 .btn-green {
     border: 0 !important;
+    background-color: var(--green) !important;
 
     &:hover {
         filter: brightness(85%);

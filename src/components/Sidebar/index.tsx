@@ -15,8 +15,11 @@ import { FaBook } from "react-icons/fa6";
 import { SiBookstack } from "react-icons/si";
 import { FaBookReader } from "react-icons/fa";
 
+import { useAuth } from "../../hooks/useAuth";
+
 export function Sidebar()
 {
+    const { currentUser } = useAuth();
     const [showSideBar, setShowSideBar] = useState(false);
     const handleCloseSideBar = () => setShowSideBar(false);
 
@@ -25,7 +28,7 @@ export function Sidebar()
             <Navbar expand="lg" className="bg-green">
                 <Container fluid>
                     <div className="d-flex align-items-center gap-2">
-                        <Button className="bg-green btn-green" onClick={() => setShowSideBar(true)}>
+                        <Button className="btn-green" onClick={() => setShowSideBar(true)}>
                             <FaBars />
                         </Button>
 
@@ -34,10 +37,10 @@ export function Sidebar()
 
                     <div className="d-flex align-items-center justify-content-between gap-4">
                         <span className="text-light">
-                            <FaUserCircle /> José Heitor
+                            <FaUserCircle /> {currentUser.name}
                         </span>
 
-                        <Button className="bg-green btn-green">
+                        <Button className="btn-green">
                             Sair <TbLogout />
                         </Button>
                     </div>
