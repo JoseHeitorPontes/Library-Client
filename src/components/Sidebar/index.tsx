@@ -7,7 +7,7 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import Row from "react-bootstrap/Row";
 import { Link, useNavigate } from "react-router-dom";
 
-import { FaBars } from "react-icons/fa6";
+import { FaBars, FaUsers } from "react-icons/fa6";
 import { TbLogout } from "react-icons/tb";
 import { FaUserCircle } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
@@ -35,6 +35,8 @@ export function Sidebar()
         }
     }
 
+    const userName = currentUser.name?.split(" ").slice(0, 2).join(" ");
+
     return (
         <>
             <Navbar expand="lg" className="bg-green">
@@ -49,7 +51,7 @@ export function Sidebar()
 
                     <div className="d-flex align-items-center justify-content-between gap-4">
                         <span className="text-light">
-                            <FaUserCircle /> {currentUser.name}
+                            <FaUserCircle /> {userName}
                         </span>
 
                         <Button className="btn-green" onClick={() => logout()}>
@@ -91,6 +93,13 @@ export function Sidebar()
                             <Link to="/emprestimos" className="d-flex align-items-center gap-2 text-green text-decoration-none fw-semibold">
                                 <FaBookReader />
                                 Empréstimos
+                            </Link>
+                        </Row>
+
+                        <Row>
+                            <Link to="/usuarios" className="d-flex align-items-center gap-2 text-green text-decoration-none fw-semibold">
+                                <FaUsers />
+                                Usuários
                             </Link>
                         </Row>
                     </nav>
