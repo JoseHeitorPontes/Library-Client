@@ -67,28 +67,28 @@ export function Sidebar()
                 <Offcanvas.Body>
                     <nav className="d-flex flex-column gap-2">
                         <Row>
-                            <Link to="/" className="d-flex align-items-center gap-2 text-green text-decoration-none">
+                            <Link to="/" className="d-flex align-items-center gap-2 text-green text-decoration-none fw-semibold">
                                 <MdDashboard />
                                 Dashboard
                             </Link>
                         </Row>
 
                         <Row>
-                            <Link to="/categorias" className="d-flex align-items-center gap-2 text-green text-decoration-none">
+                            <Link to="/categorias" className="d-flex align-items-center gap-2 text-green text-decoration-none fw-semibold">
                                 <SiBookstack />
                                 Categorias
                             </Link>
                         </Row>
 
                         <Row>
-                            <Link to="/livros" className="d-flex align-items-center gap-2 text-green text-decoration-none">
+                            <Link to="/livros" className="d-flex align-items-center gap-2 text-green text-decoration-none fw-semibold">
                                 <FaBook />
                                 Livros
                             </Link>
                         </Row>
 
                         <Row>
-                            <Link to="/emprestimos" className="d-flex align-items-center gap-2 text-green text-decoration-none">
+                            <Link to="/emprestimos" className="d-flex align-items-center gap-2 text-green text-decoration-none fw-semibold">
                                 <FaBookReader />
                                 Empréstimos
                             </Link>

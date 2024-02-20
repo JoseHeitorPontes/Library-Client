@@ -35,7 +35,7 @@ export function NewUser()
     });
 
     return (
-        <div className="d-flex justify-content-center align-items-center my-0">
+        <div className="h-vh-full d-flex justify-content-center align-items-center my-0">
             <Card className="col-4 p-4">
                 <Card.Body>
                     <Form onSubmit={formik.handleSubmit}>
