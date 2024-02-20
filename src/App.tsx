@@ -4,6 +4,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { Dashboard } from './pages/Dashboard';
 import { Sidebar } from './components/Sidebar';
 import { Login } from './pages/Login';
+import { NewUser } from './pages/NewUser';
 
 import './App.scss';
 
@@ -13,7 +14,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
-        
+          <Route path="/novo-usuario" element={<NewUser />} />
+
           <Route element={
               <AuthProvider>
                 <Sidebar />

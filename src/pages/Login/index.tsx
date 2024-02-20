@@ -1,15 +1,20 @@
 import { useFormik } from "formik";
+import { Link, useNavigate } from "react-router-dom";
 
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
 import { api } from "../../services/api";
+import { useSwal } from "../../hooks/useSwal";
 import { initialValuesLogin } from "../../utils/initialValues/login";
 import { loginSchema } from "../../utils/validations/loginSchema";
 
 export function Login()
 {
+    const navigate = useNavigate();
+    const { Toast } = useSwal();
+
     const formik = useFormik({
         initialValues: initialValuesLogin,
         validationSchema: loginSchema,
@@ -18,8 +23,17 @@ export function Login()
                 const { data } =  await api.post("/auth", values);
 
                 localStorage.setItem("token", `Bearer ${data.token}`);
-            } catch(error) {
+
+                navigate("/dashboard");
+            } catch(error: any) {
                 console.log(error);
+
+                const [firstMessage] = Object.values<string>(error.response.data.errors);
+
+                Toast.fire({
+                    icon: "error",
+                    text: firstMessage,
+                });
             }
         }
     });
@@ -37,25 +51,31 @@ export function Login()
                             <Form.Control type="email" {...formik.getFieldProps("email")} />
 
                             {formik.touched.email && formik.errors.email && (
-                                <span className="text-danger">{formik.errors.email}</span>
+                                <span className="text-danger fw-semibold">{formik.errors.email}</span>
                             )}
                         </Form.Group>
 
-                        <Form.Group className="mb-4">
+                        <Form.Group className="mb-2">
                             <Form.Label className="fw-bold">Senha:</Form.Label>
 
                             <Form.Control type="password" {...formik.getFieldProps("password")} />
 
                             {formik.touched.password && formik.errors.password && (
-                                <span className="text-danger">{formik.errors.password}</span>
+                                <span className="text-danger fw-semibold">{formik.errors.password}</span>
                             )}
                         </Form.Group>
+
+                        <div className="d-flex justify-content-between mb-4">
+                            <Link to="/novo-usuario" className="text-dark fw-semibold">Novo usuário</Link>
+
+                            <Link to="/recuperar-senha" className="text-dark fw-semibold">Esqueceu a senha?</Link>
+                        </div>
 
                         <div className="d-flex justify-content-center">
                             <Button
                                 variant="dark"
                                 type="submit"
-                                disabled={!formik.isValid}
+                                disabled={formik.isValid}
                             >
                                 Entrar
                             </Button>
