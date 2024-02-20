@@ -78,7 +78,7 @@ export function Sidebar()
                         <Row>
                             <Link to="/emprestimos" className="d-flex align-items-center gap-2 text-green text-decoration-none">
                                 <FaBookReader />
-                                Livros
+                                Empréstimos
                             </Link>
                         </Row>
                     </nav>

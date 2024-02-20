@@ -86,7 +86,13 @@ export function NewUser()
                         </div>
 
                         <div className="d-flex justify-content-center">
-                            <Button type="submit" className="bg-dark" disabled={formik.isValid}>Cadastrar</Button>
+                            <Button
+                                type="submit"
+                                className="bg-dark"
+                                disabled={formik.isSubmitting || !formik.isValid}
+                            >
+                                Cadastrar
+                            </Button>
                         </div>
                     </Form>
                 </Card.Body>

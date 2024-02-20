@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
@@ -12,7 +12,6 @@ import { loginSchema } from "../../utils/validations/loginSchema";
 
 export function Login()
 {
-    const navigate = useNavigate();
     const { Toast } = useSwal();
 
     const formik = useFormik({
@@ -24,7 +23,7 @@ export function Login()
 
                 localStorage.setItem("token", `Bearer ${data.token}`);
 
-                navigate("/dashboard");
+                location.href = "/dashboard";
             } catch(error: any) {
                 console.log(error);
 
@@ -39,7 +38,7 @@ export function Login()
     });
 
     return (
-        <div className="h-vh-full d-flex justify-content-center align-items-center bg-green my-0">
+        <div className="h-vh-full d-flex justify-content-center align-items-center my-0">
             <Card className="col-4 p-4">
                 <Card.Body>
                     <Form onSubmit={formik.handleSubmit}>
@@ -75,7 +74,7 @@ export function Login()
                             <Button
                                 variant="dark"
                                 type="submit"
-                                disabled={formik.isValid}
+                                disabled={formik.isSubmitting || !formik.isValid}
                             >
                                 Entrar
                             </Button>
