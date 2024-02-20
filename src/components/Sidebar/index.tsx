@@ -5,7 +5,7 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Row from "react-bootstrap/Row";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { FaBars } from "react-icons/fa6";
 import { TbLogout } from "react-icons/tb";
@@ -15,13 +15,25 @@ import { FaBook } from "react-icons/fa6";
 import { SiBookstack } from "react-icons/si";
 import { FaBookReader } from "react-icons/fa";
 
+import { api } from "../../services/api";
 import { useAuth } from "../../hooks/useAuth";
 
 export function Sidebar()
 {
+    const navigate = useNavigate();
     const { currentUser } = useAuth();
     const [showSideBar, setShowSideBar] = useState(false);
     const handleCloseSideBar = () => setShowSideBar(false);
+
+    async function logout() {
+        try {
+            await api.post("/logout");
+
+            navigate("/");
+        } catch(error) {
+            console.log(error);
+        }
+    }
 
     return (
         <>
@@ -40,7 +52,7 @@ export function Sidebar()
                             <FaUserCircle /> {currentUser.name}
                         </span>
 
-                        <Button className="btn-green">
+                        <Button className="btn-green" onClick={() => logout()}>
                             Sair <TbLogout />
                         </Button>
                     </div>
