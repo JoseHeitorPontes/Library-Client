@@ -6,6 +6,7 @@ import { Sidebar } from './components/Sidebar';
 import { Login } from './pages/Login';
 import { NewUser } from './pages/NewUser';
 import { ForgotPassword } from './pages/ForgotPassword';
+import { Categories } from './pages/Categories';
 
 import './App.scss';
 
@@ -26,6 +27,7 @@ function App() {
               </AuthProvider>
           }>
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/categorias" element={<Categories />} />
           </Route>
         </Routes>
       </BrowserRouter>
