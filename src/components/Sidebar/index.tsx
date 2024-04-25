@@ -15,8 +15,8 @@ import { FaBook } from "react-icons/fa6";
 import { SiBookstack } from "react-icons/si";
 import { FaBookReader } from "react-icons/fa";
 
-import { api } from "../../services/api";
-import { useAuth } from "../../hooks/useAuth";
+import { api } from "@/services/api";
+import { useAuth } from "@/hooks/useAuth";
 
 export function Sidebar()
 {
@@ -39,7 +39,7 @@ export function Sidebar()
 
     return (
         <>
-            <Navbar expand="lg" className="bg-green">
+            <Navbar expand="lg" className="bg-green mb-4">
                 <Container fluid>
                     <div className="d-flex align-items-center gap-2">
                         <Button className="btn-green" onClick={() => setShowSideBar(true)}>

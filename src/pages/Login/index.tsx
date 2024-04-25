@@ -5,10 +5,10 @@ import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
-import { api } from "../../services/api";
-import { useSwal } from "../../hooks/useSwal";
-import { initialValuesLogin } from "../../utils/initialValues/login";
-import { loginSchema } from "../../utils/validations/loginSchema";
+import { api } from "@/services/api";
+import { useSwal } from "@/hooks/useSwal";
+import { initialValuesLogin } from "@/utils/initialValues/login";
+import { loginSchema } from "@/utils/validations/loginSchema";
 
 export function Login()
 {

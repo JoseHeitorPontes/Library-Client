@@ -5,10 +5,10 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-import { api } from "../../services/api";
-import { useSwal } from "../../hooks/useSwal";
-import { newUserInitialValues } from "../../utils/initialValues/newUser";
-import { newUserSchema } from "../../utils/validations/newUserSchema";
+import { api } from "@/services/api";
+import { useSwal } from "@/hooks/useSwal";
+import { userInitialValues } from "@/utils/initialValues/user";
+import { newUserSchema } from "@/utils/validations/newUserSchema";
 
 export function NewUser()
 {
@@ -16,7 +16,7 @@ export function NewUser()
     const { Toast } = useSwal();
 
     const formik = useFormik({
-        initialValues: newUserInitialValues,
+        initialValues: userInitialValues,
         validationSchema: newUserSchema,
         async onSubmit(values) {
             try {
