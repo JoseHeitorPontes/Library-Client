@@ -13,8 +13,15 @@ export function useSwal()
             toast.addEventListener("mouseleave", SwalDefault.resumeTimer);
         },
     });
+
+    const Swal = SwalDefault.mixin({
+        showCloseButton: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+    });
     
     return {
         Toast,
+        Swal,
     };
 }

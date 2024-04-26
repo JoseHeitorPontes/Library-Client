@@ -5,6 +5,7 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
 import { api } from "@/services/api";
+import { useSwal } from "@/hooks/useSwal";
 
 import { EditCategoryModal } from "@/components/Modals/EditCategoryModal";
 import { NewCategoryModal } from "@/components/Modals/NewCategoryModal";
@@ -13,6 +14,9 @@ type CategoriesPagination = GenericPagination<Category>;
 
 export function Categories()
 {
+    const { Swal, Toast } = useSwal();
+
+    const [categoriesPagination, setCategoriesPagination] = useState<CategoriesPagination>({} as CategoriesPagination);
     const [selectedCategory, setSelectedCategory] = useState<Category>({} as Category);
 
     const[showNewCategoryModal, setShowNewCategoryModal] = useState(false);
@@ -26,7 +30,29 @@ export function Categories()
     }
     const handleCloseEditCategoryModal = () => setShowEditCategoryModal(false);
 
-    const [categoriesPagination, setCategoriesPagination] = useState<CategoriesPagination>({} as CategoriesPagination);
+    async function handleDeleteCategory(id: number) {
+        try {
+            const { isConfirmed } = await Swal.fire({
+                icon: "info",
+                text: "Tem certeza que deseja excluir esta categoria?",
+                cancelButtonText: "Cancelar",
+                cancelButtonColor: "#FF0000",
+            });
+
+            if (isConfirmed) {
+                await api.delete(`/categories/${id}`);
+
+                fetchCategories();
+            
+                Toast.fire({
+                    icon: "success",
+                    text: "Categoria excluida com sucesso!",
+                });   
+            }
+        } catch(error) {
+            console.log(error);
+        }
+    }
 
     async function fetchCategories() {
         try {
@@ -75,7 +101,7 @@ export function Categories()
                         <Card.Footer>
                             <div className="d-flex gap-2">
                                 <Button variant="success" onClick={() => handleShowEditCategoryModal(category)}>Editar</Button>
-                                <Button variant="danger">Excluir</Button>
+                                <Button variant="danger" onClick={() => handleDeleteCategory(category.id)}>Excluir</Button>
                             </div>
                         </Card.Footer>
                     </Card>
