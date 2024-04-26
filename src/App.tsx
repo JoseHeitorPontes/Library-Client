@@ -7,6 +7,7 @@ import { Login } from './pages/Login';
 import { NewUser } from './pages/NewUser';
 import { ForgotPassword } from './pages/ForgotPassword';
 import { Categories } from './pages/Categories';
+import { Books } from './pages/Books';
 
 import './App.scss';
 
@@ -28,6 +29,7 @@ function App() {
           }>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/categorias" element={<Categories />} />
+            <Route path="/livros" element={<Books />} />
           </Route>
         </Routes>
       </BrowserRouter>
