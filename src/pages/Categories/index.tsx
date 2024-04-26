@@ -7,13 +7,17 @@ import Button from "react-bootstrap/Button";
 import { api } from "@/services/api";
 
 import { EditCategoryModal } from "@/components/Modals/EditCategoryModal";
-
+import { NewCategoryModal } from "@/components/Modals/NewCategoryModal";
 
 type CategoriesPagination = GenericPagination<Category>; 
 
 export function Categories()
 {
     const [selectedCategory, setSelectedCategory] = useState<Category>({} as Category);
+
+    const[showNewCategoryModal, setShowNewCategoryModal] = useState(false);
+    const handleShowNewCategoryModal = () => setShowNewCategoryModal(true);
+    const handleCloseNewCategoryModal = () => setShowNewCategoryModal(false);
 
     const [showEditCategoryModal, setShowEditCategoryModal] = useState(false);
     function handleShowEditCategoryModal(category: Category) {
@@ -40,6 +44,12 @@ export function Categories()
 
     return (
         <Container fluid>
+            <NewCategoryModal
+                show={showNewCategoryModal}
+                onHide={handleCloseNewCategoryModal}
+                fetchCategories={fetchCategories}
+            />
+
             <EditCategoryModal
                 fetchCategories={fetchCategories}
                 category={selectedCategory}
@@ -47,28 +57,30 @@ export function Categories()
                 onHide={handleCloseEditCategoryModal}
             />
 
-            <Button className="mb-4">Nova categoria</Button>
+            <Button className="mb-4" onClick={handleShowNewCategoryModal}>Nova categoria</Button>
 
-            {categoriesPagination.data?.map((category) => (
-                <Card className="w-25 px-0">
-                    <Card.Header className="bg-green">
-                        <Card.Title className="text-light">{category.name}</Card.Title>
-                    </Card.Header>
+            <div className="d-flex gap-4">
+                {categoriesPagination.data?.map((category) => (
+                    <Card key={category.id} className="w-25 px-0">
+                        <Card.Header className="bg-green">
+                            <Card.Title className="text-light">{category.name}</Card.Title>
+                        </Card.Header>
 
-                    <Card.Body>
-                        <p>
-                            {category.description}
-                        </p>
-                    </Card.Body>
+                        <Card.Body>
+                            <p>
+                                {category.description}
+                            </p>
+                        </Card.Body>
 
-                    <Card.Footer>
-                        <div className="d-flex gap-2">
-                            <Button variant="success" onClick={() => handleShowEditCategoryModal(category)}>Editar</Button>
-                            <Button variant="danger">Excluir</Button>
-                        </div>
-                    </Card.Footer>
-                </Card>
-            ))}
+                        <Card.Footer>
+                            <div className="d-flex gap-2">
+                                <Button variant="success" onClick={() => handleShowEditCategoryModal(category)}>Editar</Button>
+                                <Button variant="danger">Excluir</Button>
+                            </div>
+                        </Card.Footer>
+                    </Card>
+                ))}
+            </div>
         </Container>
     );
 }
