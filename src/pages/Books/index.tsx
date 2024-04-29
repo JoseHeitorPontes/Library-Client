@@ -1,15 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Container from "react-bootstrap/Container";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+import Image from "react-bootstrap/Image";
 
 import { FaEye, FaTrash } from "react-icons/fa6";
 import { BiSolidEdit } from "react-icons/bi";
 
 import { api } from "@/services/api";
+
 import { Pagination } from "@/components/Pagination";
+import { imageUrl } from "@/services/imageUrl";
 
 type BooksPagination = GenericPagination<Book>;
 
@@ -17,16 +22,17 @@ export function Books()
 {
     const [isLoading, setIsLoading] = useState(true);
 
+    const forcePage = useRef(1);
     const [page, setPage] = useState(1);
     const [booksPagination, setBooksPagination] = useState<BooksPagination>({} as BooksPagination);
 
-    async function fetchBooks() {
+    async function fetchBooks(pageToUse?: number) {
         try {
             setIsLoading(true);
 
             const { data } = await api.get<BooksPagination>("/books", {
                 params: {
-                    page,
+                    page: pageToUse || page,
                 }
             });
 
@@ -38,7 +44,19 @@ export function Books()
         }
     }
 
+    function handlePageChange(selected: number) {
+        if (page !== forcePage.current) {
+            fetchBooks(selected);
+            forcePage.current = selected;
+
+            return;
+        }
+
+        setPage(selected);
+    }
+
     useEffect(() => {
+        forcePage.current = page;
         fetchBooks();
     }, [page]);
 
@@ -54,7 +72,7 @@ export function Books()
                         <Table bordered striped className="text-center">
                             <thead>
                                 <tr>
-                                    <th>Imagem</th>
+                                    <th>#</th>
                                     <th>Nome</th>
                                     <th>Categoria</th>
                                     <th>Autor</th>
@@ -64,26 +82,50 @@ export function Books()
                             </thead>
 
                             <tbody>
-                                {booksPagination.data?.map((book) => (
+                                {booksPagination.data?.map((book, index) => (
                                     <tr key={book.id}>
-                                        <td></td>
+                                        <td>{index + 1}</td>
                                         <td>{book.name}</td>
                                         <td>{book.category.name}</td>
                                         <td>{book.author}</td>
                                         <td>{book.publishingCompany}</td>
                                         <td>
                                             <div className="d-flex justify-content-center gap-2">
-                                                <Button>
-                                                    <FaEye />
-                                                </Button>
+                                                <OverlayTrigger
+                                                    overlay={
+                                                        <Tooltip>
+                                                            Ver
+                                                        </Tooltip>
+                                                    }
+                                                >
+                                                    <Button>
+                                                        <FaEye />
+                                                    </Button>
+                                                </OverlayTrigger>
 
-                                                <Button variant="success">
-                                                    <BiSolidEdit />
-                                                </Button>
+                                                <OverlayTrigger
+                                                    overlay={
+                                                        <Tooltip>
+                                                            Editar
+                                                        </Tooltip>
+                                                    }
+                                                >
+                                                    <Button variant="success">
+                                                        <BiSolidEdit />
+                                                    </Button>
+                                                </OverlayTrigger>
 
-                                                <Button variant="danger">
-                                                    <FaTrash />
-                                                </Button>
+                                                <OverlayTrigger
+                                                    overlay={
+                                                        <Tooltip>
+                                                            Deletar
+                                                        </Tooltip>
+                                                    }
+                                                >
+                                                    <Button variant="danger">
+                                                        <FaTrash />
+                                                    </Button>
+                                                </OverlayTrigger>
                                             </div>
                                         </td>
                                     </tr>
@@ -91,7 +133,12 @@ export function Books()
                             </tbody>
                         </Table>
 
-                        <Pagination pageCount={booksPagination.meta.total} />
+                        <Pagination
+                            itemsPerPage={10}
+                            totalItems={booksPagination.meta.total}
+                            forcePage={forcePage.current - 1}
+                            changeSelectedPage={handlePageChange}
+                        />
                     </>
                 ) : (
                     <div className="text-center text-secondary fw-bold">Sem categorias cadastradas.</div>
