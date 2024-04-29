@@ -8,8 +8,8 @@ import Spinner from "react-bootstrap/Spinner";
 import { api } from "@/services/api";
 import { useSwal } from "@/hooks/useSwal";
 
-import { EditCategoryModal } from "@/components/Modals/EditCategoryModal";
-import { NewCategoryModal } from "@/components/Modals/NewCategoryModal";
+import { EditCategoryModal } from "@/components/Modals/Categories/EditCategoryModal";
+import { NewCategoryModal } from "@/components/Modals/Categories/NewCategoryModal";
 
 type CategoriesPagination = GenericPagination<Category>; 
 

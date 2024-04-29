@@ -43,8 +43,16 @@ export function EditCategoryModal({
     });
 
     useEffect(() => {
-        formik.setValues(category);
+        const categoryValues = Object(category);
+
+        formik.setValues(categoryValues);
     }, [category]);
+
+    useEffect(() => {
+        if (!rest.show) {
+            formik.setValues(categoryInitialValues);
+        }
+    }, [rest.show]);
 
     return (
         <Modal {...rest}>

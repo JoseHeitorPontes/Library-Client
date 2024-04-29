@@ -60,7 +60,7 @@ export function NewCategoryModal({
 
                     <Form.Group className="mb-2">
                         <Form.Label>Descrição:</Form.Label>
-                        <Form.Control {...formik.getFieldProps("description")} />
+                        <Form.Control {...formik.getFieldProps("description")} as="textarea" />
                     </Form.Group>
 
                     <Form.Group className="d-flex gap-2 align-items-center mb-4">
@@ -68,7 +68,9 @@ export function NewCategoryModal({
                         <Form.Check type="switch" />
                     </Form.Group>
 
-                    <Button type="submit">Cadastrar</Button>
+                    <div className="d-flex justify-content-end">
+                        <Button type="submit">Cadastrar</Button>
+                    </div>
                 </Form>
             </Modal.Body>
         </Modal>

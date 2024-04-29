@@ -6,7 +6,6 @@ import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
-import Image from "react-bootstrap/Image";
 
 import { FaEye, FaTrash } from "react-icons/fa6";
 import { BiSolidEdit } from "react-icons/bi";
@@ -14,7 +13,7 @@ import { BiSolidEdit } from "react-icons/bi";
 import { api } from "@/services/api";
 
 import { Pagination } from "@/components/Pagination";
-import { imageUrl } from "@/services/imageUrl";
+import { ViewBookModal } from "@/components/Modals/Books/ViewBookModal";
 
 type BooksPagination = GenericPagination<Book>;
 
@@ -25,6 +24,14 @@ export function Books()
     const forcePage = useRef(1);
     const [page, setPage] = useState(1);
     const [booksPagination, setBooksPagination] = useState<BooksPagination>({} as BooksPagination);
+
+    const [selectedBook, setSelectedBook] = useState<Book>({} as Book);
+    const [showViewBookModal, setShowViewBookModal] = useState(false);
+    function handleShowViewBookModal(book: Book) {
+        setSelectedBook(book);
+        setShowViewBookModal(true);
+    }
+    const handleCloseViewBookModal = () => setShowViewBookModal(false);
 
     async function fetchBooks(pageToUse?: number) {
         try {
@@ -62,6 +69,8 @@ export function Books()
 
     return (
         <Container fluid>
+            <ViewBookModal book={selectedBook} show={showViewBookModal} onHide={handleCloseViewBookModal} />
+
             {isLoading ? (
                 <div className="d-flex justify-content-center">
                     <Spinner animation="border" variant="primary" />
@@ -98,7 +107,7 @@ export function Books()
                                                         </Tooltip>
                                                     }
                                                 >
-                                                    <Button>
+                                                    <Button onClick={() => handleShowViewBookModal(book)}>
                                                         <FaEye />
                                                     </Button>
                                                 </OverlayTrigger>
